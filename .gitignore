@@ -13,6 +13,10 @@ develop-eggs/
 dist/
 downloads/
 eggs/
+<<<<<<< HEAD
+=======
+.eggs/
+>>>>>>> e0e2fe5a63a48eeb3538b22a377968759bea90cd
 lib/
 lib64/
 parts/
@@ -36,9 +40,17 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .coverage
+<<<<<<< HEAD
 .cache
 nosetests.xml
 coverage.xml
+=======
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+>>>>>>> e0e2fe5a63a48eeb3538b22a377968759bea90cd
 
 # Translations
 *.mo
@@ -52,6 +64,7 @@ docs/_build/
 
 # PyBuilder
 target/
+<<<<<<< HEAD
 
 # =========================
 # Operating System Files
@@ -99,3 +112,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+=======
+>>>>>>> e0e2fe5a63a48eeb3538b22a377968759bea90cd
