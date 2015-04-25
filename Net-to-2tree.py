@@ -1,10 +1,16 @@
+import re
+import sys
+
 from mininet.topo import Topo
 from mininet.cli import CLI
-from mininet.log import lg
+from mininet.log import lg, setLogLevel, info, error
 from mininet.node import Node
 from mininet.topolib import TreeNet
 from mininet.node import RemoteController, OVSKernelSwitch
+from mininet.node import Node
 from mininet.net import Mininet
+from mininet.link import Intf
+from mininet.util import quietRun
 
 
 def startNAT( root, inetIntf='eth0', subnet='10.0/8' ):
@@ -91,6 +97,16 @@ def connectToInternet( network, switch='s1', rootip='10.254', subnet='10.0/8'):
 
     return root
 
+def checkIntf( intf ):
+    "Make sure intf exists and is not configured."
+    if ( ' %s:' % intf ) not in quietRun( 'ip link show' ):
+        error( 'Error:', intf, 'does not exist!\n' )
+        exit( 1 )
+    ips = re.findall( r'\d+\.\d+\.\d+\.\d+', quietRun( 'ifconfig ' + intf ) )
+    if ips:
+        error( 'Error:', intf, 'has an IP address,'
+               'and is probably in use!\n' )
+        exit( 1 )
 
 
 if __name__ == "__main__":
@@ -134,7 +150,7 @@ if __name__ == "__main__":
     Host13 = net.addHost('h13')
     Host14 = net.addHost('h14')
     Host15 = net.addHost('h15')
-    Host16 =  net.addHost('h16')
+
 
     # Add links
     net.addLink(S1,SL1)
@@ -166,7 +182,23 @@ if __name__ == "__main__":
     net.addLink(SRRL3,Host13)
     net.addLink(SRRL3,Host14)
     net.addLink(SRRR3,Host15)
-    net.addLink(SRRR3,Host16)
+    #net.addLink(SRRR3,Host16)
+
+
+    intfName = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth1'
+    info( '*** Connecting to hw intf: %s' % intfName )
+
+    info( '*** Checking', intfName, '\n' )
+    checkIntf( intfName )
+
+    switch = SRRR3
+    info( '*** Adding hardware interface', intfName, 'to switch',
+          switch.name, '\n' )
+    _intf = Intf( intfName, node=switch )
+
+    info( '*** Note: you may need to reconfigure the interfaces for '
+          'the Mininet hosts:\n', net.hosts, '\n' )
+
 
     rootnode = connectToInternet( net )
     print "*** Hosts are running and should have internet connectivity"
@@ -174,3 +206,4 @@ if __name__ == "__main__":
     CLI( net )
     stopNAT( rootnode )
     net.stop()
+
