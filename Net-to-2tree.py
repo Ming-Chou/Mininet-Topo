@@ -1,3 +1,11 @@
+"""
+Host1 & Host16 are outside host.
+Host1 IP : 10.0.0.1
+Host16 IP : 10.0.0.16
+Netmask : 255.0.0.0
+Gateway : 10.0.0.254
+"""
+
 import re
 import sys
 
@@ -135,21 +143,20 @@ if __name__ == "__main__":
     SRRL3 = net.addSwitch('s14')
     SRRR3 = net.addSwitch('s15')
 
-    Host1 = net.addHost('h1')
-    Host2 = net.addHost('h2')
-    Host3 = net.addHost('h3')
-    Host4 = net.addHost('h4')
-    Host5 = net.addHost('h5')
-    Host6 = net.addHost('h6')
-    Host7 = net.addHost('h7')
-    Host8 = net.addHost('h8')
-    Host9 = net.addHost('h9')
-    Host10 = net.addHost('h10')
-    Host11 = net.addHost('h11')
-    Host12 = net.addHost('h12')
-    Host13 = net.addHost('h13')
-    Host14 = net.addHost('h14')
-    Host15 = net.addHost('h15')
+    Host2 = net.addHost('h2', ip = "10.0.0.2")
+    Host3 = net.addHost('h3', ip = "10.0.0.3")
+    Host4 = net.addHost('h4', ip = "10.0.0.4")
+    Host5 = net.addHost('h5', ip = "10.0.0.5")
+    Host6 = net.addHost('h6', ip = "10.0.0.6")
+    Host7 = net.addHost('h7', ip = "10.0.0.7")
+    Host8 = net.addHost('h8', ip = "10.0.0.8")
+    Host9 = net.addHost('h9', ip = "10.0.0.9")
+    Host10 = net.addHost('h10', ip = "10.0.0.10")
+    Host11 = net.addHost('h11', ip = "10.0.0.11")
+    Host12 = net.addHost('h12', ip = "10.0.0.12")
+    Host13 = net.addHost('h13', ip = "10.0.0.13")
+    Host14 = net.addHost('h14', ip = "10.0.0.14")
+    Host15 = net.addHost('h15', ip = "10.0.0.15")
 
 
     # Add links
@@ -167,7 +174,7 @@ if __name__ == "__main__":
     net.addLink(SRL2,SRLR3)
     net.addLink(SRR2,SRRL3)
     net.addLink(SRR2,SRRR3)
-    net.addLink(SLLL3,Host1)
+
     net.addLink(SLLL3,Host2)
     net.addLink(SLLR3,Host3)
     net.addLink(SLLR3,Host4)
@@ -182,19 +189,33 @@ if __name__ == "__main__":
     net.addLink(SRRL3,Host13)
     net.addLink(SRRL3,Host14)
     net.addLink(SRRR3,Host15)
-    #net.addLink(SRRR3,Host16)
 
 
-    intfName = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth1'
-    info( '*** Connecting to hw intf: %s' % intfName )
+    intfName1 = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth1'
+    info( '*** Connecting to hw intf: %s' % intfName1 )
 
-    info( '*** Checking', intfName, '\n' )
-    checkIntf( intfName )
+    info( '*** Checking', intfName1, '\n' )
+    checkIntf( intfName1 )
 
-    switch = SRRR3
-    info( '*** Adding hardware interface', intfName, 'to switch',
-          switch.name, '\n' )
-    _intf = Intf( intfName, node=switch )
+    switch1 = SLLL3
+    info( '*** Adding hardware interface', intfName1, 'to switch',
+          switch1.name, '\n' )
+    _intf = Intf( intfName1, node=switch1 )
+
+    info( '*** Note: you may need to reconfigure the interfaces for '
+          'the Mininet hosts:\n', net.hosts, '\n' )
+
+
+    intfName2 = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth2'
+    info( '*** Connecting to hw intf: %s' % intfName2 )
+
+    info( '*** Checking', intfName2, '\n' )
+    checkIntf( intfName2 )
+
+    switch2 = SRRR3
+    info( '*** Adding hardware interface', intfName2, 'to switch',
+          switch2.name, '\n' )
+    _intf = Intf( intfName2, node=switch2 )
 
     info( '*** Note: you may need to reconfigure the interfaces for '
           'the Mininet hosts:\n', net.hosts, '\n' )
