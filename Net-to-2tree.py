@@ -192,6 +192,7 @@ if __name__ == "__main__":
     net.addLink(SRRL3,Host14)
     net.addLink(SRRR3,Host15)
 
+#-------------Add interface for each Virtual Machine---------------#
 
     intfName1 = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth1'
     info( '*** Connecting to hw intf: %s' % intfName1 )
