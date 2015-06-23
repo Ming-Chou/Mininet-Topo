@@ -180,14 +180,14 @@ if __name__ == "__main__":
     net.addLink(SLLL3,Host2)
     net.addLink(SLLR3,Host3)
     net.addLink(SLLR3,Host4)
-    #net.addLink(SLRL3,Host5)
+    net.addLink(SLRL3,Host5)
     net.addLink(SLRL3,Host6)
     net.addLink(SLRR3,Host7)
     net.addLink(SLRR3,Host8)
     net.addLink(SRLL3,Host9)
     net.addLink(SRLL3,Host10)
     net.addLink(SRLR3,Host11)
-    #net.addLink(SRLR3,Host12)
+    net.addLink(SRLR3,Host12)
     net.addLink(SRRL3,Host13)
     net.addLink(SRRL3,Host14)
     net.addLink(SRRR3,Host15)
@@ -207,7 +207,6 @@ if __name__ == "__main__":
     info( '*** Note: you may need to reconfigure the interfaces for '
           'the Mininet hosts:\n', net.hosts, '\n' )
 
-#-------------------------------------------------------------------
 
     intfName2 = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth2'
     info( '*** Connecting to hw intf: %s' % intfName2 )
@@ -223,39 +222,6 @@ if __name__ == "__main__":
     info( '*** Note: you may need to reconfigure the interfaces for '
           'the Mininet hosts:\n', net.hosts, '\n' )
 
-#-------------------------------------------------------------------
-
-    intfName3 = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth3'
-    info( '*** Connecting to hw intf: %s' % intfName3 )
-
-    info( '*** Checking', intfName3, '\n' )
-    checkIntf( intfName3 )
-
-    switch3 = SLRL3 #For IP:10.0.0.5
-    info( '*** Adding hardware interface', intfName3, 'to switch',
-          switch3.name, '\n' )
-    _intf = Intf( intfName3, node=switch3 )
-
-    info( '*** Note: you may need to reconfigure the interfaces for '
-          'the Mininet hosts:\n', net.hosts, '\n' )
-
-#-------------------------------------------------------------------
-
-    intfName4 = sys.argv[ 1 ] if len( sys.argv ) > 1 else 'eth4'
-    info( '*** Connecting to hw intf: %s' % intfName4 )
-
-    info( '*** Checking', intfName4, '\n' )
-    checkIntf( intfName4 )
-
-    switch4 = SRLR3 #For IP:10.0.0.12
-    info( '*** Adding hardware interface', intfName4, 'to switch',
-          switch4.name, '\n' )
-    _intf = Intf( intfName4, node=switch4 )
-
-    info( '*** Note: you may need to reconfigure the interfaces for '
-          'the Mininet hosts:\n', net.hosts, '\n' )
-
-#-------------------------------------------------------------------
 
     rootnode = connectToInternet( net )
     print "*** Hosts are running and should have internet connectivity"
